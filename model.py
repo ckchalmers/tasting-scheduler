@@ -3,8 +3,16 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-# for reservations, we need timeslots and dates and we need those to be connected to users.
-# users can have only one timeslot per day
+# for tastings, we need timeslot and date
+# for users, we just need name
+# a tasting can have one user, but users can have multiple tastings
+# users can have only one tasting per day
+# class Date(db.Model):
+#     """Date"""
+
+#     __tablename__ = 'date'
+
+    
 
 
 class Melon(db.Model):
