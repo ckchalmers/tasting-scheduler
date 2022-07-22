@@ -9,48 +9,46 @@ function Homepage(props) {
   );
 }
 
-function AllMelonsPage(props) {
-  const { melons, addMelonToCart } = props;
-  const melonCards = [];
+function AllTastingsPage(props) {
+  const { tastings, addTastingToCart } = props;
+  const tastingCards = [];
 
-  for (const melon of Object.values(melons)) {
-    const melonCard = (
-      <MelonCard
-        key={melon.melon_code}
-        code={melon.melon_code}
-        name={melon.name}
-        imgUrl={melon.image_url}
-        price={melon.price}
-        handleAddToCart={addMelonToCart}
+  for (const tasting of Object.values(tastings)) {
+    const tastigCard = (
+      <TastingCard
+        key={tasting.tasting_id}
+        date={tasting.date}
+        time={tasting.time}
+        user={tasting.user}
+        handleAddToCart={addTastingToCart}
       />
     );
 
-    melonCards.push(melonCard);
+    tastingCards.push(tastingCard);
   }
 
   return (
     <React.Fragment>
-      <h1>All Melons</h1>
+      <h1>All Tastings</h1>
       <div id="shopping">
-        <div className="col-12 col-md-9 d-flex flex-wrap">{melonCards}</div>
+        <div className="col-12 col-md-9 d-flex flex-wrap">{tastingCards}</div>
       </div>
     </React.Fragment>
   );
 }
 
 function ShoppingCartPage(props) {
-  const { cart, melons } = props;
+  const { cart, tastings } = props;
   const tableData = [];
-  let totalCost = 0;
-  for (const melonId in cart) {
-    const currentMelon = melons[melonId];
-    const melonCost = cart[melonId] * currentMelon.price;
-    totalCost += melonCost;
+  for (const tastingId in cart) {
+    const currentTasting = tastings[tastingId];
+
     tableData.push(
-      <tr key={melonId}>
-        <td>{currentMelon.name}</td>
-        <td>{cart[melonId]}</td>
-        <td>${melonCost.toFixed(2)}</td>
+      <tr key={tastingId}>
+        <td>{currentTasting.time}</td>
+        <td>{currentTasting.date}</td>
+        <td>{cart[tastingId]}</td>
+        
       </tr>,
     );
   }
@@ -61,14 +59,14 @@ function ShoppingCartPage(props) {
         <table className="table">
           <thead>
             <tr>
-              <th>Melon</th>
-              <th>Quantity</th>
-              <th>Total</th>
+              <th>Time</th>
+              <th>Date</th>
+              <th>TastingID</th>
             </tr>
           </thead>
           <tbody>{tableData}</tbody>
         </table>
-        <p className="lead">Total: ${totalCost.toFixed(2)}</p>
+        <p className="lead"></p>
       </div>
     </React.Fragment>
   );
@@ -104,21 +102,25 @@ function Navbar(props) {
   );
 }
 
-function MelonCard(props) {
-  const { code, name, imgUrl, price, handleAddToCart } = props;
+function TastingCard(props) {
+  const { key, date, time, user, handleAddToCart } = props;
 
   return (
     <div className="card melon-card">
-      <img src={imgUrl} className="card-img-top" alt="" />
+      {/* melon image */}
+      {/* <img src={imgUrl} className="card-img-top" alt="" /> */}
       <div className="card-body">
-        <h5 className="card-title">{name}</h5>
+        {/* melon title */}
+        <h5 className="card-title">{date} {time}</h5>
       </div>
       <div className="card-body pt-0 container-fluid">
         <div className="row">
           <div className="col-12 col-lg-6">
-            <span className="lead price d-inline-block">${price.toFixed(2)}</span>
+            {/* melon price */}
+            {/* <span className="lead price d-inline-block">${price.toFixed(2)}</span> */}
           </div>
           <div className="col-12 col-lg-6">
+            {/* Add to Cart button */}
             <button
               type="button"
               className="btn btn-sm btn-success d-inline-block"

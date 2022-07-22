@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, render_template
-from model import db, Melon, MelonType, connect_to_db
+from model import db, Tasting, User, connect_to_db
 
 app = Flask(__name__)
 app.secret_key = 'replace_this_with_an_actual_secret'
@@ -10,35 +10,34 @@ def home():
 
     return render_template('index.html')
 
+# users can log in by providing a user name
 @app.route('/login')
 def login():
 
     return render_template('index.html')
 
-# this will likely be for users to see all their appointments
-@app.route('/<path>')
-def route(path):
+# @app.route('/<path>')
+# def route(path):
 
-    return render_template('index.html')
+#     return render_template('index.html')
 
-# we need a page for displaying the results of the appointment search
-@app.route('/api/melons')
-def get_melons():
-    melons = Melon.query.all()
-    return jsonify({melon.melon_code: melon.to_dict() for melon in melons})
+# @app.route('/<path>/<code>')
+# def nested_route(path, code):
 
-# we need a page to search for appointments
-@app.route('/<path>/<code>')
-def nested_route(path, code):
+#     return render_template('index.html')
 
-    return render_template('index.html')
+# a page to display all tastings (limit to available once working)
+@app.route('/api/tastings')
+def get_tastings():
+    tastings = Tasting.query.all()
+    return jsonify({tasting.tasting_id: tasting.to_dict() for tasting in tastings})
 
+#show user info (once working, add all the appointments for a user)
+@app.route('/api/user/<user_id>')
+def get_user(user_id):
 
-@app.route('/api/melon/<melon_code>')
-def get_melon(melon_code):
-
-    melon = Melon.query.get(melon_code)
-    return jsonify(melon.to_dict())
+    user = User.query.get(user_id)
+    return jsonify(user.to_dict())
 
 
 if __name__ == '__main__':

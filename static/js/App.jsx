@@ -1,15 +1,15 @@
 function App() {
-  const [melons, setMelons] = React.useState({});
+  const [tastings, setTastings] = React.useState({});
   const [shoppingCart, setShoppingCart] = React.useState({});
   // loading is part of the further study
   const [loading, setLoading] = React.useState(false);
 
   React.useEffect(() => {
     setLoading(true);
-    fetch('/api/melons')
+    fetch('/api/tastings')
       .then((response) => response.json())
-      .then((melonData) => {
-        setMelons(melonData);
+      .then((tastingData) => {
+        setMelons(tastingData);
         setLoading(false);
       });
   }, []);
@@ -27,16 +27,16 @@ function App() {
     localStorage.setItem('shoppingCart', JSON.stringify(shoppingCart));
   }, [shoppingCart]);
 
-  function addMelonToCart(melonCode) {
+  function addTastingToCart(tastingID) {
     setShoppingCart((currentShoppingCart) => {
       // this makes a copy of the shopping cart since you should
       // never modify the state value directly
       const newShoppingCart = { ...currentShoppingCart };
 
-      if (newShoppingCart[melonCode]) {
-        newShoppingCart[melonCode] += 1;
+      if (newShoppingCart[tastingID]) {
+        newShoppingCart[tastingID] += 1;
       } else {
-        newShoppingCart[melonCode] = 1;
+        newShoppingCart[tastingID] = 1;
       }
 
       return newShoppingCart;
@@ -58,11 +58,11 @@ function App() {
           {loading ? (
             <Loading />
           ) : (
-            <AllMelonsPage melons={melons} addMelonToCart={addMelonToCart} />
+            <AllTastingsPage tastings={tastings} addTastingToCart={addTastingToCart} />
           )}
         </ReactRouterDOM.Route>
         <ReactRouterDOM.Route exact path="/cart">
-          {loading ? <Loading /> : <ShoppingCartPage cart={shoppingCart} melons={melons} />}
+          {loading ? <Loading /> : <ShoppingCartPage cart={shoppingCart} tastings={tastings} />}
         </ReactRouterDOM.Route>
       </div>
     </ReactRouterDOM.BrowserRouter>
