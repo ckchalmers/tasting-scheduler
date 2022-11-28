@@ -20,7 +20,7 @@ class User(db.Model):
         return f'<User name={self.name}>'
 
     def to_dict(self):
-        return {'user_id': self.type_id,
+        return {'user_id': self.user_id,
                 'name': self.name}
 
 class Tasting(db.Model):
@@ -30,7 +30,7 @@ class Tasting(db.Model):
 
     tasting_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     date = db.Column(db.Date, nullable=False)
-    time = db.Column(db.Time, nullable=False)
+    time = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
 
     user = db.relationship('User', backref='tastings')
@@ -43,7 +43,8 @@ class Tasting(db.Model):
         return {'tasting_id': self.tasting_id,
                 'date': self.date,
                 'time': self.time,
-                'user': self.user.name}
+                # 'user': self.user.name
+                }
 
 # class Melon(db.Model):
 #     """Melon"""
